@@ -1,0 +1,74 @@
+swagger: "2.0"
+info:
+    title: watchr
+    description: webservice that allows for configuration of stock prize monitoring & alerts
+    version: 0.0.1
+host: localhost
+basePath: /
+schemes: http
+paths:
+    "/v1/stocks/":
+        get:
+            description: get a list of all watching stocks
+            parameters: []
+            responses:
+                "200":
+                    descripton: Success
+                    schema:
+                        type: array
+                        items:
+                            type: string
+                            example: aapl
+                "500":
+                    descripton: Internal server error
+    "/v1/stocks/{quote}":
+        get:
+            description: get information of a watching stock
+            parameters:
+                - name: quote
+                  in: path
+                  description: the name of the stock
+                  required: true
+                  type: string
+            responses:
+                "200":
+                    descripton: Success
+                    schema:
+                        type: string
+                        example: Started watching at 2018/01/23
+                "404":
+                    descripton: The quote is not being watched
+                "500":
+                    descripton: Internal server error
+        post:
+            description: add a stock to watch
+            parameters:
+                - name: quote
+                  in: path
+                  description: the name of the stock
+                  required: true
+                  type: string
+            responses:
+                "204":
+                    descripton: Success
+                "403":
+                    descripton: Number of watching stocks exceeded quota
+                "404":
+                    descripton: The quote is invalid (can't find it through IEX API)
+                "500":
+                    descripton: Internal server error
+        delete:
+            description: stop watching a stock
+            parameters:
+                - name: quote
+                  in: path
+                  description: the name of the stock
+                  required: true
+                  type: string
+            responses:
+                "204":
+                    descripton: Success
+                "404":
+                    descripton: Currently not watching the stock
+                "500":
+                    descripton: Internal server error
