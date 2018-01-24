@@ -13,14 +13,14 @@ paths:
             parameters: []
             responses:
                 "200":
-                    descripton: Success
+                    description: Success
                     schema:
                         type: array
                         items:
                             type: string
                             example: aapl
                 "500":
-                    descripton: Internal server error
+                    description: Internal server error
     "/v1/stocks/{quote}":
         get:
             description: get information of a watching stock
@@ -32,16 +32,16 @@ paths:
                   type: string
             responses:
                 "200":
-                    descripton: Success
+                    description: Success
                     schema:
                         type: string
                         example: Started watching at 2018/01/23
                 "400":
-                    descripton: Invalid stock quote name
+                    description: Invalid stock quote name
                 "404":
-                    descripton: The quote is not being watched
+                    description: The quote is not being watched
                 "500":
-                    descripton: Internal server error
+                    description: Internal server error
         post:
             description: add a stock to watch
             parameters:
@@ -52,15 +52,15 @@ paths:
                   type: string
             responses:
                 "204":
-                    descripton: Success
+                    description: Success
                 "400":
-                    descripton: Invalid stock quote name
+                    description: Invalid stock quote name
                 "403":
-                    descripton: Number of watching stocks exceeded quota
+                    description: Number of watching stocks exceeded quota
                 "404":
-                    descripton: The quote doesn't exist (can't find it through IEX API)
+                    description: The quote doesn't exist (can't find it through IEX API)
                 "500":
-                    descripton: Internal server error
+                    description: Internal server error
         delete:
             description: stop watching a stock
             parameters:
@@ -71,10 +71,117 @@ paths:
                   type: string
             responses:
                 "204":
-                    descripton: Success
+                    description: Success
                 "400":
-                    descripton: Invalid stock quote name
+                    description: Invalid stock quote name
                 "404":
-                    descripton: Currently not watching the stock
+                    description: Currently not watching the stock
                 "500":
-                    descripton: Internal server error
+                    description: Internal server error
+    "/v1/stocks/{quote}/alerts":
+        get:
+            description: get a list of all the alerts configured for this quote
+            parameters:
+                - name: quote
+                  in: path
+                  description: the name of the stock
+                  required: true
+                  type: string
+            responses:
+                "200":
+                    description: Success
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/AlertConfig'
+
+                "500":
+                    description: Internal server error
+        post:
+            description: add a new alert
+            parameters:
+                - name: quote
+                  in: path
+                  description: the name of the stock
+                  required: true
+                  type: string
+                - in: body
+                  name: body
+                  description: AlertConfig
+                  required: true
+                  schema:
+                      $ref: '#/definitions/AlertConfig'
+            responses:
+                "200":
+                    description: Success. The generated Id will be returned
+                    schema:
+                        type: string
+                        example: a1b2c3
+                "400":
+                    description: Invalid alert type or config
+                "404":
+                    description: The quote is not being watched
+                "500":
+                    description: Internal server error
+    "/v1/stocks/{quote}/alerts/{alert}":
+        # get:
+        #     description: get the status of an alert
+        post:
+            description: update an existing alert
+            parameters:
+                - name: quote
+                  in: path
+                  description: the name of the stock
+                  required: true
+                  type: string
+                - name: alert
+                  in: path
+                  description: the id of the alert
+                  required: true
+                  type: string
+                - in: body
+                  name: body
+                  description: AlertConfig
+                  required: true
+                  schema:
+                      $ref: '#/definitions/AlertConfig'
+            responses:
+                "204":
+                    description: Update was successful
+                "400":
+                    description: Invalid alert type or config
+                "404":
+                    description: The quote is not being watched or the alert doesn't exist
+                "500":
+                    description: Internal server error
+        delete:
+            description: remove an existing alert
+            parameters:
+                - name: quote
+                  in: path
+                  description: the name of the stock
+                  required: true
+                  type: string
+                - name: alert
+                  in: path
+                  description: the id of the alert
+                  required: true
+                  type: string
+            responses:
+                "204":
+                    description: Success
+                "404":
+                    description: The quote is not being watched or the alert doesn't exist
+                "500":
+                    description: Internal server error
+definitions:
+    AlertConfig:
+        type: object
+        required: [type, config]
+        properties:
+            type:
+                type: string
+                example: static
+            config:
+                type: price
+                example: "> 180.99"
