@@ -36,6 +36,8 @@ paths:
                     schema:
                         type: string
                         example: Started watching at 2018/01/23
+                "400":
+                    descripton: Invalid stock quote name
                 "404":
                     descripton: The quote is not being watched
                 "500":
@@ -51,10 +53,12 @@ paths:
             responses:
                 "204":
                     descripton: Success
+                "400":
+                    descripton: Invalid stock quote name
                 "403":
                     descripton: Number of watching stocks exceeded quota
                 "404":
-                    descripton: The quote is invalid (can't find it through IEX API)
+                    descripton: The quote doesn't exist (can't find it through IEX API)
                 "500":
                     descripton: Internal server error
         delete:
@@ -68,6 +72,8 @@ paths:
             responses:
                 "204":
                     descripton: Success
+                "400":
+                    descripton: Invalid stock quote name
                 "404":
                     descripton: Currently not watching the stock
                 "500":
