@@ -2,6 +2,8 @@
 
 Monitor stock quote prizes and send push notifications
 
+This is a hackday project. Tests will be added when there is more time
+
 # Ongoing
 
 Prototyping. Plan is to poll [IEX API](https://iextrading.com/developer/docs/#stocks) for stock prizes and use [Pushover](https://pushover.net/clients) (free for 7 days) for push notifications

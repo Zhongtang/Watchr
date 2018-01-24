@@ -23,9 +23,4 @@ app.get('/v1/stocks/:quote/', quotesMware.getQuote)
 app.post('/v1/stocks/:quote/', quotesMware.addQuote)
 app.delete('/v1/stocks/:quote/', quotesMware.removeQuote)
 
-function logger(content) {
-    var logTime = new Date().toISOString()
-    console.log(`${logTime} ${content}`)
-}
-
 app.listen(config.PORT, () => console.log('Listening on port ' + config.PORT))
