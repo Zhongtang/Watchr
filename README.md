@@ -2,14 +2,15 @@
 
 Monitor stock quote prizes and send push notifications
 
-Prototyping. Plan is to poll [IEX API](https://iextrading.com/developer/docs/#stocks) for stock prizes and use [Pushover](https://pushover.net/clients) (free for 7 days) for push notifications
-
 # Ongoing
 
-- Basic web framework
-- Hosting
-- Poll IEX
-- Send push notifications
+Prototyping. Plan is to poll [IEX API](https://iextrading.com/developer/docs/#stocks) for stock prizes and use [Pushover](https://pushover.net/clients) (free for 7 days) for push notifications
+
+- [x] Basic web framework
+- [ ] Poll IEX
+- [ ] Send push notifications
+- [ ] Hosting
+- [ ] Persist data
 
 # Setup
 
