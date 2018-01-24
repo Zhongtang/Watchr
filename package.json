@@ -20,6 +20,10 @@
   },
   "homepage": "https://github.com/Zhongtang/Watchr#readme",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "request": "^2.83.0"
+  },
+  "jshintConfig": {
+    "esnext": true
   }
 }
